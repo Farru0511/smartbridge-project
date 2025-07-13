@@ -17,5 +17,5 @@ This project was developed as part of a SmartBridge internship to demonstrate ba
   - `paper/`
   - `cardboard/`
   - `trash/`
-- Ready for enhancement with machine learning or image classification in futur
+- Ready for enhancement with machine learning or image classification in future
 
