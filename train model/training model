@@ -1,0 +1,50 @@
+import tensorflow as tf
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras import layers, models
+
+# Paths to your dataset
+train_dir = '/root/.cache/kagglehub/datasets/techsash/waste-classification-data/versions/1/DATASET/TRAIN'
+test_dir = '/root/.cache/kagglehub/datasets/techsash/waste-classification-data/versions/1/DATASET/TEST'
+
+# Image size
+img_size = (224, 224)
+
+# Data generators
+train_datagen = ImageDataGenerator(rescale=1./255)
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+train_data = train_datagen.flow_from_directory(
+    directory=train_dir,
+    target_size=img_size,
+    batch_size=32,
+    class_mode='categorical'  # Change to categorical for multiple classes
+)
+
+test_data = test_datagen.flow_from_directory(
+    directory=test_dir,
+    target_size=img_size,
+    batch_size=32,
+    class_mode='categorical'
+)
+
+# Build the model
+model = models.Sequential([
+    layers.Input(shape=(224, 224, 3)),
+    layers.Conv2D(32, (3, 3), activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Conv2D(64, (3, 3), activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Conv2D(128, (3, 3), activation='relu'),
+    layers.MaxPooling2D(),
+    layers.Flatten(),
+    layers.Dense(64, activation='relu'),
+    layers.Dense(train_data.num_classes, activation='softmax')  # Change output layer for multiple classes
+])
+
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy']) # Change loss for multiple classes
+
+# Train the model
+model.fit(train_data, epochs=10, validation_data=test_data)
+
+# Save the model
+model.save("waste_classifier.h5")
