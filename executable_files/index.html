@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Cleantech Waste Classifier
+  </title>
+  <link href="css/style.css" rel="stylesheet"/>
+ </head>
+ <body class="min-h-screen">
+  <!-- Header -->
+  <header class="hero-gradient text-white">
+   <div class="container mx-auto px-4 py-16">
+    <div class="flex flex-col md:flex-row items-center">
+     <div class="md:w-1/2 mb-8 md:mb-0">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 font-['Montserrat']">
+       WasteWise
+      </h1>
+      <h2 class="text-2xl md:text-3xl mb-6">
+       Transform Waste Management with transfer learning
+      </h2>
+      <p class="text-lg mb-8">
+       Our transfer learning-powered platform helps businesses and municipalities optimize waste sorting, reduce contamination, and increase recycling rates.
+      </p>
+      <button class="bg-white text-green-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition" id="tryDemoBtn">
+       Try Live Demo
+      </button>
+     </div>
+     <div class="md:w-1/2 flex justify-center">
+      <img alt="Smart waste management system wis a modern recycling facility" class="rounded-lg shadow-xl" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0f1e74a-8d99-414c-8679-004ddc7cd8cd.png"/>
+     </div>
+    </div>
+   </div>
+  </header>
+  <!-- How It Works Section -->
+  <section class="py-16 bg-white">
+   <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12 font-['Montserrat']">
+     How Our Waste Classifier project Works
+    </h2>
+    <div class="grid md:grid-cols-3 gap-8">
+     <div class="bg-gray-50 p-6 rounded-lg">
+      <div class="text-green-600 text-4xl mb-4">
+       1
+      </div>
+      <h3 class="text-xl font-semibold mb-3">
+       Upload Waste Image
+      </h3>
+      <p>
+       Capture or upload photos of waste items using our mobile-friendly interface.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg">
+      <div class="text-green-600 text-4xl mb-4">
+       2
+      </div>
+      <h3 class="text-xl font-semibold mb-3">
+       project Analysis
+      </h3>
+      <p>
+       Our transfer learning model processes the image to identify waste composition and classify material type.
+      </p>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg">
+      <div class="text-green-600 text-4xl mb-4">
+       3
+      </div>
+      <h3 class="text-xl font-semibold mb-3">
+       Smart Recommendations
+      </h3>
+      <p>
+       Receive disposal instructions tailored to local regulations and recycling facilities.
+      </p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Classification Demo Section -->
+  <section class="py-16 bg-gray-50" id="demoSection">
+   <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12 font-['Montserrat']">
+     Waste Classification Demo
+    </h2>
+    <div class="flex flex-col md:flex-row gap-8 items-center">
+     <div class="md:w-1/2">
+      <div class="dropzone rounded-lg p-8 text-center cursor-pointer flex flex-col items-center justify-center h-64 mb-8" id="dropzone">
+       <svg class="h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        </path>
+       </svg>
+       <p class="text-gray-500 mb-2">
+        Drag &amp; drop waste image here
+       </p>
+       <p class="text-gray-400 text-sm">
+        or click to select
+       </p>
+       <input accept="image/*" class="hidden" id="fileInput" type="file"/>
+      </div>
+      <div class="bg-white rounded-lg shadow p-4 mb-8">
+       <img class="hidden max-w-full h-auto rounded" id="previewImage"/>
+      </div>
+      <div class="flex justify-center">
+       <button class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled="" id="classifyBtn">
+        Classify Waste
+       </button>
+      </div>
+     </div>
+     <div class="md:w-1/2">
+      <div class="hidden bg-white rounded-lg shadow p-6" id="resultsContainer">
+       <h3 class="text-xl font-semibold mb-4">
+        Classification Results
+       </h3>
+       <div class="space-y-4" id="classificationResults">
+        <!-- Results will be populated here -->
+       </div>
+       <div class="mt-6 pt-6 border-t border-gray-200 hidden" id="disposalInfo">
+        <h4 class="font-semibold mb-2">
+         Recommended Disposal Method
+        </h4>
+        <p class="text-gray-700" id="disposalMethod">
+        </p>
+        <h4 class="font-semibold mt-4 mb-2">
+         Environmental Impact
+        </h4>
+        <div class="w-full bg-gray-200 rounded-full h-4 mb-4" id="impactMeter">
+         <div class="h-4 rounded-full" id="impactBar" style="width: 0%;">
+         </div>
+        </div>
+        <p class="text-gray-700" id="impactDescription">
+        </p>
+       </div>
+      </div>
+      <div class="hidden text-center py-8" id="loadingSpinner">
+       <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-600 mb-4">
+       </div>
+       <p>
+        Analyzing waste composition...
+       </p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <script src="js/app.js">
+  </script>
+ </body>
+</html>
+<!-- Waste Categories Section -->
+<section class="py-16 bg-white">
+ <div class="container mx-auto px-4">
+  <h2 class="text-3xl font-bold text-center mb-12 font-['Montserrat']">
+   Supported Waste Categories
+  </h2>
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+   <div class="waste-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+    <div class="h-48 bg-gray-100 flex items-center justify-center">
+     <img alt="Various plastic bottles and containers sorted into recycling bins" class="w-full h-full object-cover" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a0b13d82-a99e-4e9e-9c55-0cc2c505b82d.png"/>
+    </div>
+    <div class="p-4">
+     <h3 class="font-semibold text-lg mb-2">
+      Plastics
+     </h3>
+     <p class="text-gray-600">
+      PET, HDPE, PVC and other polymer types
+     </p>
+    </div>
+   </div>
+   <div class="waste-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+    <div class="h-48 bg-gray-100 flex items-center justify-center">
+     <img alt="Crushed aluminum cans and other metal scrap materials ready for recycling" class="w-full h-full object-cover" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b3952a53-867b-4186-b225-9fa500ca3b6b.png"/>
+    </div>
+    <div class="p-4">
+     <h3 class="font-semibold text-lg mb-2">
+      Metals
+     </h3>
+     <p class="text-gray-600">
+      Aluminum, steel, copper and other alloys
+     </p>
+    </div>
+   </div>
+   <div class="waste-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+    <div class="h-48 bg-gray-100 flex items-center justify-center">
+     <img alt="Sorted paper and cardboard stacks awaiting recycling process" class="w-full h-full object-cover" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/199ed025-14b6-4cc4-8d51-83c463982029.png"/>
+    </div>
+    <div class="p-4">
+     <h3 class="font-semibold text-lg mb-2">
+      Paper &amp; Cardboard
+     </h3>
+     <p class="text-gray-600">
+      Newsprint, office paper, corrugated cardboard
+     </p>
+    </div>
+   </div>
+   <div class="waste-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+    <div class="h-48 bg-gray-100 flex items-center justify-center">
+     <img alt="Assorted organic waste including fruit peels, vegetables and other compostable materials" class="w-full h-full object-cover" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0f45c6ee-ef0a-4833-9d9c-b32fee391d44.png"/>
+    </div>
+    <div class="p-4">
+     <h3 class="font-semibold text-lg mb-2">
+      Organic Waste
+     </h3>
+     <p class="text-gray-600">
+      Food scraps, yard trimmings, compostables
+     </p>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+<!-- Transfer Learning Explanation -->
+<section class="py-16 bg-gray-50">
+ <div class="container mx-auto px-4">
+  <div class="flex flex-col md:flex-row items-center gap-8">
+   <div class="md:w-1/2 mb-8 md:mb-0">
+    <img alt="Visualization of transfer learning process showing pre-trained model adapting to waste classification task" class="rounded-lg shadow-lg" src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3cecb9c3-23cd-42e1-9d9f-a5e4cfdd73f1.png"/>
+   </div>
+   <div class="md:w-1/2">
+    <h2 class="text-3xl font-bold mb-6 font-['Montserrat']">
+     Powered by Transfer Learning
+    </h2>
+    <p class="mb-4 text-lg">
+     Our waste classifier leverages transfer learning to adapt powerful pre-trained models like MobileNet for specialized waste recognition tasks.
+    </p>
+    <p class="mb-4">
+     This approach significantly reduces the amount of training data required while maintaining high accuracy, allowing us to continuously improve our model as we encounter new waste streams.
+    </p>
+    <p>
+     The model has been fine-tuned on thousands of waste item images across different lighting conditions, angles, and states of decomposition.
+    </p>
+   </div>
+  </div>
+ </div>
+</section>
