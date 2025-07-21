@@ -1,0 +1,40 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7fafc;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .waste-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .classification-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .classification-card:hover {
+            border-left-color: #10b981;
+        }
+        
+        .dropzone {
+            border: 2px dashed #cbd5e0;
+            background-color: #f8fafc;
+        }
+        
+        .dropzone.active {
+            border-color: #10b981;
+            background-color: #f0fdf4;
+        }
+    
